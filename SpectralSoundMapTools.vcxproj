@@ -142,12 +142,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="dataToImage.cpp" />
+    <ClCompile Include="base64.cpp" />
+    <ClCompile Include="dataToFile.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="FFT_Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dataToImage.h" />
+    <ClInclude Include="base64.h" />
+    <ClInclude Include="dataToFile.h" />
     <ClInclude Include="FFT_Transform.h" />
     <ClInclude Include="SpectSoundTypes.h" />
   </ItemGroup>

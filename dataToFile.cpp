@@ -1,16 +1,22 @@
-#include "dataToImage.h"
+#include "dataToFile.h"
 #include <fstream>
 #define TINY_DNG_WRITER_IMPLEMENTATION
 #include "tiny_dng_writer.h"
-
+#include <string>
 #include "rgba_bitmap.h"
+#include "base64.h"
 
 
-int dataToImage::writeArray(std::vector<float>* in, std::string folder, std::string fileSuffix, int useColorChannels, int byteCutoff)
+int dataToFile::writeArray(std::vector<float>* in, std::string folder, std::string fileSuffix, int useColorChannels, int byteCutoff)
 {
-	// 1 2 3 4
-	// 
-
+	// NEEDS WORK - Avoid using...
+	// As shaders have access to a single pixel at a time,
+	// Data would be spread across multiple - Floats contain 4 bytes and RGB is 3 bytes.
+	// TBH, as I'm focusing on FFT data, I can probably submit to a lower bit depth for each floating point.
+	// These things need thinking about.
+	// One way to combat this would be to load the texture twice and offset the other
+	// texture by 1 pixel across.. but as you can see, you would also need to have one shifted down
+	// when the overlap wraps around. You could specify for this algorithm to m
 	float N = in->size();
 
 	// 10 floats = 40 bits
@@ -95,7 +101,7 @@ int dataToImage::writeArray(std::vector<float>* in, std::string folder, std::str
 	return 0;
 }
 
-int dataToImage::writeArray_32bmp(std::vector<float>* in, std::string folder, std::string fileSuffix)
+int dataToFile::writeArray_32bmp(std::vector<float>* in, std::string folder, std::string fileSuffix)
 {
 
 	float N = in->size();
@@ -120,7 +126,50 @@ int dataToImage::writeArray_32bmp(std::vector<float>* in, std::string folder, st
 
 	std::ofstream bmp_file("C:/Users/stuar/Documents/test.rgba", std::ios::out | std::ios::binary);
 	bmp_file.write(bitmap_file_data, bitmap_size);
+	bmp_file.close();
+
+	return 0;
+}
 
 
+int dataToFile::writeArray_raw(std::vector<float>* in, std::string folder, std::string fileSuffix, bool base64) {
+	float N = in->size();
+
+	int widthHeight = static_cast<int>(floor(sqrt(N)));
+
+	size_t total = widthHeight * widthHeight;
+	int leftOver = N - total;
+	int extraColumns = static_cast<int>(ceil(leftOver / static_cast<double>(widthHeight)));
+	int actualWidth = widthHeight + extraColumns;
+	total += extraColumns * widthHeight;
+
+	std::cout << "\nLeftOver: " << leftOver << std::endl;
+
+	std::cout << "Creating image with width: " << actualWidth << " and height: " << widthHeight << std::endl;
+
+	// resize input to match total
+	in->resize(total);
+	
+
+	if (base64) {
+		const unsigned char* bitmap = reinterpret_cast<unsigned char*>(&((*in)[0]));
+		std::string out = base64_encode(bitmap, total);
+
+		std::cout << out << std::endl;
+
+		std::vector<BYTE> testData = base64_decode(out);
+		std::cout << "TestData.size: " << testData.size() << std::endl;
+
+		std::ofstream rawFile("C:/Users/stuar/Documents/base64test", std::ios::out | std::ios::binary);
+		rawFile.write(out.data() , total * sizeof(float));
+		rawFile.close();
+	}
+	else {
+		const char* bitmap = reinterpret_cast<char*>(&((*in)[0]));
+		std::cout << bitmap << std::endl;
+		std::ofstream rawFile("C:/Users/stuar/Documents/rawTest", std::ios::out | std::ios::binary);
+		rawFile.write(bitmap, total * sizeof(float));
+		rawFile.close();
+	}
 	return 0;
 }

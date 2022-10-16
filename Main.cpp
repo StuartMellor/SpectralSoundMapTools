@@ -7,7 +7,7 @@
 #include "AudioFile.h"
 #include <fstream>
 
-#include "dataToImage.h"
+#include "dataToFile.h"
 #include "rgba_bitmap.h"
 #include "rgba_bitmap.c"
 
@@ -46,15 +46,13 @@ int main() {
 
 	FFT_Transform<float>::GetFreqMag(&(audioFile.samples[0]), &spectrumMag, 2500, &newTestSize, false, true);
 
-	dataToImage::writeArray_32bmp(&spectrumMag, "C:/Users/stuar", "spectmag");
+	// dataToFile::
+	dataToFile::writeArray_raw(&spectrumMag, "C:/Users/stuar", "spectmag", true);
 
-
-
-
-	std::ofstream myfile;
-	myfile.open("C:/Users/stuar/spectmag.csv", std::ios::trunc);
-	for (int i = 0; i < spectrumMag.size(); i++) {
-		myfile << spectrumMag[i] << "\n";
-	}
-	myfile.close();
+	//std::ofstream myfile;
+	//myfile.open("C:/Users/stuar/spectmag.csv", std::ios::trunc);
+	//for (int i = 0; i < spectrumMag.size(); i++) {
+	//	myfile << spectrumMag[i] << "\n";
+	//}
+	//myfile.close();
 }

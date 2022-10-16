@@ -24,7 +24,10 @@
     <ClCompile Include="FFT_Transform.cpp">
       <Filter>Source Files\NewFilter1</Filter>
     </ClCompile>
-    <ClCompile Include="dataToImage.cpp">
+    <ClCompile Include="dataToFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +35,13 @@
     <ClInclude Include="FFT_Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dataToImage.h">
+    <ClInclude Include="dataToFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SpectSoundTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base64.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
