@@ -79,7 +79,7 @@ int FFT_Transform<T>::GetFreqMag(std::vector<T>* in, std::vector<T>* out, int de
 		return -1;
 	}
 
-	std::vector<std::complex<float>> c_out(dataN);
+	std::vector<std::complex<T>> c_out(dataN);
 
 
 	FFT_Transform<float>::DToC_transform(in, dataN, &c_out, 0, 0, DEBUG_MODE);
@@ -153,7 +153,6 @@ int FFT_Transform<T>::resample_inplace(std::vector<T>* in, int newSampleRatio, i
 		}
 		(*in)[newN - 1] = accum / diffN;
 	}
-
 
 	return 0;
 }

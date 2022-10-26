@@ -117,6 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\stuar\Documents\cpp\pocketfft-cpp;C:\Users\stuar\Documents\cpp\AudioFile;C:\Users\stuar\Documents\cpp\tinydng;C:\Users\stuar\Documents\cpp\rgba_bitmap</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,11 +147,13 @@
     <ClCompile Include="dataToFile.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="FFT_Transform.cpp" />
+    <ClCompile Include="smaudio.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base64.h" />
     <ClInclude Include="dataToFile.h" />
     <ClInclude Include="FFT_Transform.h" />
+    <ClInclude Include="smaudio.h" />
     <ClInclude Include="SpectSoundTypes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
